@@ -1,0 +1,20 @@
+<div *ngIf="product" class="row h-100 pt-2 pr-2" [routerLink]="[product.id]">
+  <div class="card bg-light border-success">
+    <picture *ngIf="product.imageUrl">
+      <div class="card-header">
+        <img [src]="product.imageUrl" class="img-fluid">
+      </div>
+    </picture>
+    <div class="card-body">
+      <h6 class="card-title mb-1"><b>{{ product.productName }}</b></h6>
+      <span class="card-text text-muted mt-0">
+        {{ genderText() }}
+        <span class="seperator">-</span>
+        {{ product.colourDescription }}
+      </span>
+    </div>
+    <div class="card-footer">
+      <h6 class="card-text">{{ product.productPrice | currency }}</h6>
+    </div>
+  </div>
+</div>
