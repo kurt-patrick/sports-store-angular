@@ -17,28 +17,44 @@
     </div>
 
     <div class="col-lg-4">
+
       <h1 class="mb-1 text-white"><b>{{ product.productName }}</b></h1>
       <h6 class="mb-1 text-white">{{ genderText() }}</h6>
       <h6 class="mb-1 text-white">{{ product.colourDescription }}</h6>
       <h6 class="mb-1 text-white">{{ product.productPrice | currency }}</h6>
 
-      <div class="mb-1 text-white">
-        <p>shoes sizes</p>
+      <div class="pt-3 text-white">
+        <hr class="pt-0 mt-0 pb-1">
+        <app-product-sizes></app-product-sizes>
+        <hr class="">
       </div>
 
-      <div class="row mb-1 text-white">
 
-        <div class="col">
-          <label class="" for="input_tel_quantity" aria-hidden="false">
+      <div>
+        <div class="text-white row">
+          <div class="col-4">
             <span class="form-label">QTY</span>
-            <input id="input_tel_quantity" name="quantity" required="" type="tel" autocomplete="off" value="">
-          </label>
+          </div>
+          <div class="col-8">
+          </div>
         </div>
 
-        <div class="col">
-          <button class="btn btn-info">Add to cart</button>
-        </div>
+        <div class="text-white row">
+          <div class="col-3 pr-0">
 
+              <select class="custom-select" id="inputGroupSelect04" aria-hidden="true">
+                  <option selected value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="3">4</option>
+                  <option value="3">5</option>
+                </select>
+
+          </div>
+          <div class="col-9 pl-1">
+            <button class="btn btn-success h-100 w-100">ADD TO CART</button>
+          </div>
+        </div>
       </div>
 
     </div>

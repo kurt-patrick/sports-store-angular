@@ -6,7 +6,8 @@ import {
 } from '@angular/core';
 import {
   ActivatedRoute,
-  Router
+  Router,
+  Data
 } from '@angular/router';
 import {
   Observable
@@ -15,7 +16,7 @@ import {
 import {
   Product, Gender
 } from '../../models/product';
-import { stringify } from '@angular/compiler/src/util';
+import { MessagingService } from '../../services/messaging.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -33,21 +34,46 @@ export class ProductDetailComponent implements OnInit {
     return this.product.gender === Gender.womens ? 'Women\'s'  : 'Men\'s';
   }
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private messagingService: MessagingService) {
     console.log('ProductDetailComponent.constructor()');
 
-    activatedRoute.data.subscribe(
+    /*
+    activatedRoute.data.subscribe({
+      complete: () => this.messagingService.showNgxLoading(false),
+      error: () => this.messagingService.showNgxLoading(false),
       // tslint:disable-next-line: no-string-literal
-      data => this.product = data['product']
-    );
+      next: data => this.product = data['product'],
+    });
+    */
 
-    // console.log('product: ' + (JSON.stringify(cake)));
-    // console.log('cake.id: ' + (cake.id));
+    activatedRoute.data.subscribe({
+      complete: this.onComplete,
+      error: this.onError,
+      next: data => this.onNext(data),
+    });
+
+  }
+
+  onComplete(): void {
+    console.log('ProductDetailComponent.onComplete()');
+    this.messagingService.showNgxLoading(false);
+  }
+
+  onError(): void {
+    console.log('ProductDetailComponent.onComplete()');
+    this.messagingService.showNgxLoading(false);
+  }
+
+  onNext(data: Data): void {
+    console.log('ProductDetailComponent.onNext()');
+    // tslint:disable-next-line: no-string-literal
+    this.product = data['product'];
+    this.messagingService.showNgxLoading(false);
   }
 
   ngOnInit() {
     console.log('ProductDetailComponent.ngOnInit()');
-    console.log('this.product: ' + (this.product));
+    // this.messagingService.showNgxLoading(false);
   }
 
 }

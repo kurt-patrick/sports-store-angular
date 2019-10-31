@@ -1,8 +1,8 @@
 import {
-  BehaviorSubject
+  BehaviorSubject, Observable
 } from 'rxjs';
 import {
-  map
+  map, throttleTime
 } from 'rxjs/operators';
 import {
   Injectable

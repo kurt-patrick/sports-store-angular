@@ -1,4 +1,4 @@
-<div *ngIf="product" class="row h-100 pt-2 pr-2" [routerLink]="[product.id]">
+<div *ngIf="product" class="row h-100 pt-2 pr-2" [routerLink]="[product.id]"(click)="showLoader()" >
   <div class="card bg-light border-success">
     <picture *ngIf="product.imageUrl">
       <div class="card-header">

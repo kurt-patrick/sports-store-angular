@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MatDialogModule, MatButtonModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxLoadingModule } from 'ngx-loading';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 import { ProductDetailResolverService } from './products/product-detail-resolver.service';
 import { ProductService } from './products/product.service';
 import { ProductSnapshotComponent } from './products/product-snapshot/product-snapshot.component';
+import { ProductSizesComponent } from './products/product-sizes/product-sizes.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { ProductSnapshotComponent } from './products/product-snapshot/product-sn
     SearchResultComponent,
     ProductListComponent,
     ProductDetailComponent,
-    ProductSnapshotComponent
+    ProductSnapshotComponent,
+    ProductSizesComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { ProductSnapshotComponent } from './products/product-snapshot/product-sn
     BrowserAnimationsModule,
     ShowHidePasswordModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxLoadingModule.forRoot({})
   ],
   providers: [
     ProductService,

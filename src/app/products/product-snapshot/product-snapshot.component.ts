@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Gender, Product } from 'src/app/models/product';
+import { MessagingService } from '../../services/messaging.service';
 
 @Component({
   selector: 'app-product-snapshot',
@@ -17,9 +18,13 @@ export class ProductSnapshotComponent implements OnInit {
     return this.product.gender === Gender.womens ? 'Women\'s'  : 'Men\'s';
   }
 
-  constructor() {}
+  constructor(private messagingService: MessagingService) {}
 
   ngOnInit() {
+  }
+
+  showLoader() {
+    this.messagingService.showNgxLoading(true);
   }
 
 }
