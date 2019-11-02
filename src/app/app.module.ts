@@ -22,6 +22,8 @@ import { ProductDetailResolverService } from './products/product-detail-resolver
 import { ProductService } from './products/product.service';
 import { ProductSnapshotComponent } from './products/product-snapshot/product-snapshot.component';
 import { ProductSizesComponent } from './products/product-sizes/product-sizes.component';
+import { CartLineComponent } from './cart-line/cart-line.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { ProductSizesComponent } from './products/product-sizes/product-sizes.co
     ProductListComponent,
     ProductDetailComponent,
     ProductSnapshotComponent,
-    ProductSizesComponent
+    ProductSizesComponent,
+    CartLineComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

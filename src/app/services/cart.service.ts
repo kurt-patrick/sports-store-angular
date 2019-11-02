@@ -22,9 +22,10 @@ export class CartService {
       cartItem.quantity += +quantity;
     }
     index = this.indexOf(product);
-    console.log('Product: ' + product.productName);
-    console.log('index: ' + index);
-    console.log('quantity: ' + this.cartItems[index].quantity);
+  }
+
+  getCartItems(): CartItem[] {
+    return this.cartItems;
   }
 
   private indexOf(product: Product): number {
