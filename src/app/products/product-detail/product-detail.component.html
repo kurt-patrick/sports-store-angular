@@ -41,18 +41,16 @@
 
         <div class="text-white row">
           <div class="col-3 pr-0">
-
-              <select class="custom-select" id="inputGroupSelect04" aria-hidden="true">
-                  <option selected value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="3">4</option>
-                  <option value="3">5</option>
-                </select>
-
+            <select class="custom-select" id="inputGroupSelect04" aria-hidden="true" [(ngModel)]="quantity">
+              <option selected value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
           </div>
           <div class="col-9 pl-1">
-            <button class="btn btn-success h-100 w-100">ADD TO CART</button>
+            <button (click)="addToCart()" class="btn btn-success h-100 w-100">ADD TO CART</button>
           </div>
         </div>
       </div>

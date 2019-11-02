@@ -17,6 +17,7 @@ import {
   Product, Gender
 } from '../../models/product';
 import { MessagingService } from '../../services/messaging.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -26,6 +27,7 @@ import { MessagingService } from '../../services/messaging.service';
 export class ProductDetailComponent implements OnInit {
 
   @Input() product: Product;
+  quantity: number;
 
   genderText(): string {
     if (!this.product) {
@@ -34,7 +36,9 @@ export class ProductDetailComponent implements OnInit {
     return this.product.gender === Gender.womens ? 'Women\'s'  : 'Men\'s';
   }
 
-  constructor(private activatedRoute: ActivatedRoute, private messagingService: MessagingService) {
+  constructor(private activatedRoute: ActivatedRoute, private messagingService: MessagingService, private cartService: CartService) {
+
+    this.quantity = 1;
 
     /*
     activatedRoute.data.subscribe({
@@ -69,6 +73,10 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     // this.messagingService.showNgxLoading(false);
+  }
+
+  addToCart() {
+    this.cartService.addProduct(this.product, this.quantity);
   }
 
 }
