@@ -1,29 +1,33 @@
-<h2 mat-dialog-title>{{modalTitle}}</h2>
-<div class="form-group">
-  <label for="email">EMAIL ADDRESS</label>
-  <input type="email" class="form-control" id="email" name="email" autocomplete="off" [(ngModel)]="email" [value]="email">
-</div>
-<div class="form-group">
-  <label for="password">PASSWORD</label>
-  <show-hide-password size="med" btnStyle="primary" [btnOutline]="false">
-    <input type="password" class="form-control" name="password" id="password" autocomplete="off" [(ngModel)]="password" [value]="password">
-  </show-hide-password>
-</div>
-<div class="form-group">
-  <a class="link" href="#">Forgot Password</a>
-</div>
-<div *ngIf="alertMessage && alertMessage.length > 0" class="alert alert-danger">{{alertMessage}}</div>
+<div class="container text-white pt-4">
+  <div class="row d-flex justify-content-center pt-4">
+    <div class="col-lg-4 col-md-6 col-sm-8 col-xs-8">
 
-<div class="form-inline">
-  <a class="btn btn-outline-success w-50" href="javascript:void" (click)="createAccount()">CREATE AN ACCOUNT</a>
-  <a class="btn btn-primary w-50" href="" (click)="signIn()">SIGN IN</a>
-</div>
+      <h2>Sign in</h2>
+      <div class="form-group">
+        <label for="email">EMAIL ADDRESS</label>
+        <input type="email" class="form-control" id="email" name="email" autocomplete="off" required [(ngModel)]="email">
+      </div>
+      <div class="form-group">
+        <label for="password">PASSWORD</label>
+        <show-hide-password size="med" btnStyle="primary" [btnOutline]="false">
+          <input type="password" class="form-control" name="password" id="password" autocomplete="off"
+            [(ngModel)]="password" required>
+        </show-hide-password>
+      </div>
+      <div class="form-group">
+        <a class="link" href="#">Forgot Password</a>
+      </div>
+      <div *ngIf="alertMessage && alertMessage.length > 0" class="alert alert-danger">{{alertMessage}}</div>
 
-<!--
-<mat-dialog-content>Do you wish to continue previous shopping?</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>No</button>
-  < !-- The mat-dialog-close directive optionally accepts a value as a result for the dialog.-- >
-  <button mat-button [mat-dialog-close]="true">Yes</button>
-</mat-dialog-actions>
--->
+      <div class="form-inline">
+        <div class="col pl-0 pr-1">
+          <a class="btn btn-outline-success w-100" href="javascript:void" (click)="createAccount()">REGISTER</a>
+        </div>
+        <div class="col pl-0 pr-0">
+          <a class="btn btn-primary w-100 h-100" href="" (click)="signIn()">SIGN IN</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div>

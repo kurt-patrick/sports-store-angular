@@ -35,7 +35,6 @@ export class ProductDetailComponent implements OnInit {
   }
 
   constructor(private activatedRoute: ActivatedRoute, private messagingService: MessagingService) {
-    console.log('ProductDetailComponent.constructor()');
 
     /*
     activatedRoute.data.subscribe({
@@ -55,24 +54,20 @@ export class ProductDetailComponent implements OnInit {
   }
 
   onComplete(): void {
-    console.log('ProductDetailComponent.onComplete()');
     this.messagingService.showNgxLoading(false);
   }
 
   onError(): void {
-    console.log('ProductDetailComponent.onComplete()');
     this.messagingService.showNgxLoading(false);
   }
 
   onNext(data: Data): void {
-    console.log('ProductDetailComponent.onNext()');
     // tslint:disable-next-line: no-string-literal
     this.product = data['product'];
     this.messagingService.showNgxLoading(false);
   }
 
   ngOnInit() {
-    console.log('ProductDetailComponent.ngOnInit()');
     // this.messagingService.showNgxLoading(false);
   }
 

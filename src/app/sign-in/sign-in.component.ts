@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit, Input } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
-import { StoreService } from '../services/store.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,11 +13,10 @@ export class SignInComponent implements OnInit {
   @Input() email: string;
   @Input() password: string;
   alertMessage: string;
-  modalTitle: string;
+  form: FormGroup;
+  private formSubmitAttempt: boolean;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private storeService: StoreService) {
-    this.modalTitle = data.title;
-    console.log(data);
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
@@ -30,16 +30,24 @@ export class SignInComponent implements OnInit {
   }
 
   signIn(): boolean {
+
+    this.formSubmitAttempt = true;
+
     if (!this.validateDetails()) {
       return false;
     }
-    const userAccount = this.storeService.getUserAccount(this.email, this.password);
-    if (userAccount == null) {
+
+    const authenticated = this.authService.login({
+      id: 0,
+      email: this.email,
+      password: this.password
+    });
+
+    if (!authenticated) {
       this.alertMessage = 'Invalid email or password';
-      return false;
     }
 
-    return true;
+    return false;
   }
 
   private validateDetails() {
@@ -63,6 +71,7 @@ export class SignInComponent implements OnInit {
   }
 
   private isEmail(search: string): boolean {
+    // tslint:disable-next-line: max-line-length
     const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     return regexp.test(search);
   }

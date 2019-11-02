@@ -5,6 +5,7 @@ import { SearchResultsComponent } from './components/search-results/search-resul
 import { ProductListComponent } from './products/product-list/product-list.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 import { ProductDetailResolverService } from './products/product-detail-resolver.service';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 const routes: Routes = [
   { path: 'products', component: ProductListComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
       product: ProductDetailResolverService
     }
   },
+  { path: 'signin', component: SignInComponent },
   { path: 'search', component: SearchResultsComponent },
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },

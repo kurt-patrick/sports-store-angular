@@ -12,7 +12,6 @@ export class MessagingService {
   constructor() { }
 
   showNgxLoading(value: boolean) {
-    console.log('MessagingService.showNgxLoading: ' + value);
     this.ngxLoadingComms.next(value);
   }
 

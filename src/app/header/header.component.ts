@@ -2,6 +2,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { SignInComponent } from '../sign-in/sign-in.component';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +12,11 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private router: Router) {}
+  isLoggedIn$: boolean;
+
+  constructor(public dialog: MatDialog, private router: Router, public authService: AuthService) {
+    this.authService.isLoggedIn.subscribe(value => this.isLoggedIn$ = value);
+  }
 
   @Input() searchValue: string;
 
@@ -30,8 +36,6 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.dialog.open(SignInComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog was closed');
-      console.log(result);
     });
 
   } // openModal()

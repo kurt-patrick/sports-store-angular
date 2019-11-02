@@ -14,23 +14,6 @@ export class StoreService {
 
   constructor() {}
 
-  getUserAccounts(): UserAccount[] {
-    return [
-      {
-        id: 1,
-        username: 'test@email.com',
-        password: 'password',
-        loggedIn: false
-      }
-    ];
-  }
-
-  getUserAccount(email: string, pPassword: string): UserAccount {
-    const userAccounts = this.getUserAccounts();
-    return userAccounts.find( ({username, password}) =>
-      username === email && password === pPassword);
-  }
-
   getProducts() {
     return this.products$;
   }
