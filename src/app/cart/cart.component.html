@@ -1,19 +1,26 @@
 <div class="container text-white">
 
-  <h3 class="pb-4">Shopping cart</h3>
-  <div *ngIf="items && items.length > 0" class="cart-header pb-4">
-
-    <div class="row d-flex justify-content-center">
-      <div class="col-2"><h4>Product</h4></div>
-      <div class="col-3"></div>
-      <div class="col-1 text-center"><h4>Quantity</h4></div>
-      <div class="col-2 text-center"><h4>Price</h4></div>
-      <div class="col-1 text-center"></div>
+  <div class="row">
+    <div class="col-6">
+      <h4 class="pb-1">Shopping Cart</h4>
     </div>
+    <div class="col-6 text-right pt-2">
+      <label><b>Price</b></label>
+    </div>
+  </div>
+
+  <hr class="border">
+  <div *ngIf="items && items.length > 0" class="cart-header pb-4">
 
     <div class="cart-items">
       <div *ngFor="let item of items" class="cart-line">
         <app-cart-line [cartItem]="item"></app-cart-line>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-right pt-2">
+        <h6><b>Subtotal ({{ totalQuantity() }} items): {{ subtotal() | currency }}</b></h6>
       </div>
     </div>
 

@@ -28,6 +28,13 @@ export class CartService {
     return this.cartItems;
   }
 
+  removeItem(cartItem: CartItem): void {
+    const index: number = this.indexOf(cartItem.product);
+    if (index >= 0) {
+      this.cartItems.splice(index, 1);
+    }
+  }
+
   private indexOf(product: Product): number {
     if (!this.cartItems || this.cartItems.length === 0) {
       return -1;

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CartItem } from '../models/cart-item';
+import { CartService } from '../services/cart.service';
+import { CartItemTotalCalculator } from '../models/cart-item-total-calculator';
 
 @Component({
   selector: 'app-cart-line',
@@ -10,7 +12,7 @@ export class CartLineComponent implements OnInit {
 
   @Input() cartItem: CartItem;
 
-  constructor() { }
+  constructor(private cartService: CartService) { }
 
   ngOnInit() {
   }
@@ -22,12 +24,20 @@ export class CartLineComponent implements OnInit {
     }
     const arr: number[] = [];
     // tslint:disable-next-line: no-inferrable-types
-    let value: number = 0;
+    let value: number = 1;
     while (value <= max) {
       arr.push(value);
       value += 1;
     }
     return arr;
+  }
+
+  lineTotal(): number {
+    return CartItemTotalCalculator.calculateLineTotal(this.cartItem);
+  }
+
+  delete(): void {
+    this.cartService.removeItem(this.cartItem);
   }
 
 }
