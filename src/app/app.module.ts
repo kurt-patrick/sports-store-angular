@@ -24,6 +24,7 @@ import { ProductSnapshotComponent } from './products/product-snapshot/product-sn
 import { ProductSizesComponent } from './products/product-sizes/product-sizes.component';
 import { CartLineComponent } from './cart-line/cart-line.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CartComponent } from './cart/cart.component';
     ProductSnapshotComponent,
     ProductSizesComponent,
     CartLineComponent,
-    CartComponent
+    CartComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
