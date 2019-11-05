@@ -1,28 +1,46 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import {
+  Injectable
+} from '@angular/core';
+import {
+  CanActivate,
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot
+} from '@angular/router';
+import {
+  Observable
+} from 'rxjs';
+import {
+  AuthService
+} from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  isLoggedIn$: boolean;
+  constructor(private authService: AuthService, private router: Router) {}
 
-  constructor(private authService: AuthService, private router: Router) {
-    console.log('AuthGuard.constructor()');
-    this.authService.isLoggedIn.subscribe(value => this.isLoggedIn$ = value);
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    const url: string = state.url;
+    return this.checkLogin(url);
   }
 
-  canActivate(): boolean {
-    console.log('AuthGuard.canActivate()');
-    if (this.isLoggedIn$) {
-      console.log('isLoggedIn: true');
+  checkLogin(url: string): boolean {
+
+    console.log('AuthGuard.checkLogin() =======================================');
+
+    console.log('this.authService.isLoggedIn: ' + this.authService.isLoggedIn);
+    if (this.authService.isLoggedIn) {
       return true;
     }
-    console.log('isLoggedIn: false');
+
+    this.authService.redirectUrl = url;
+    console.log('this.authService.redirectUrl: ' + this.authService.redirectUrl);
+
+    console.log('this.router.navigate([/signin])');
     this.router.navigate(['/signin']);
+
     return false;
   }
 

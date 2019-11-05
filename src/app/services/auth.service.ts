@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserAccount } from '../models/user-account';
 import { MOCK_USERS } from '../models/mock-user-accounts';
-import { throwError, BehaviorSubject, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { tap, delay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -9,32 +10,46 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-  private loggedIn = new BehaviorSubject<boolean>(false);
-  private loggedInUser = new BehaviorSubject<UserAccount>(null);
+  isLoggedIn = false;
+  redirectUrl: string;
 
   constructor(private router: Router) {}
 
-  get isLoggedIn() {
-    return this.loggedIn.asObservable();
-  }
+  login(user: UserAccount): Observable<boolean> {
 
-  login(user: UserAccount): boolean {
+    console.log('AuthService.login() =======================================');
+
     const match = MOCK_USERS.find( ({email: username, password}) =>
       username === user.email && password === user.password);
 
-    const authenticated = match !== null;
+    this.isLoggedIn = match !== null;
+    console.log('authenticated: ' + this.isLoggedIn);
 
-    this.loggedIn.next(authenticated);
-    this.loggedInUser.next(match);
+    console.log('this.redirectUrl: ' + this.redirectUrl);
+    if (this.redirectUrl) {
+      this.router.navigate([this.redirectUrl]);
+      this.redirectUrl = null;
+    } else {
+      this.router.navigate(['/home']);
+    }
 
-    this.router.navigate(['/home']);
+    return of(this.isLoggedIn).pipe(
+      delay(2000)
+    );
 
-    return authenticated;
+    /*
+    return of(this.isLoggedIn).pipe(
+      delay(2000),
+      tap(value => this.isLoggedIn = authenticated)
+    );
+    */
+
   }
 
   logout() {
-    this.loggedIn.next(false);
-    this.router.navigate(['/home']);
+    this.isLoggedIn = false;
+    this.redirectUrl = null;
+    // this.router.navigate(['/home']);
   }
 
 }
