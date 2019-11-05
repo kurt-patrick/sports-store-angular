@@ -25,6 +25,7 @@ import { ProductSizesComponent } from './products/product-sizes/product-sizes.co
 import { CartLineComponent } from './cart-line/cart-line.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
     NgxLoadingModule.forRoot({})
   ],
   providers: [
+    AuthGuard,
     ProductService,
     ProductDetailResolverService
   ],

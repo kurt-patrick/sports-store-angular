@@ -8,6 +8,7 @@ import { ProductDetailResolverService } from './products/product-detail-resolver
 import { SignInComponent } from './sign-in/sign-in.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: 'products', component: ProductListComponent },
@@ -18,7 +19,11 @@ const routes: Routes = [
       product: ProductDetailResolverService
     }
   },
-  { path: 'checkout', component: CheckoutComponent },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard]
+  },
   { path: 'cart', component: CartComponent },
   { path: 'signin', component: SignInComponent },
   { path: 'search', component: SearchResultsComponent },
