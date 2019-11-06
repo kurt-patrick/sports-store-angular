@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
 
   private setRouterUrl(): void {
     this.routerUrl = this.router.url;
+    console.log('this.routerUrl: ' + this.routerUrl);
   }
 
 }

@@ -8,6 +8,7 @@ import {
 import {
   CartItemTotalCalculator
 } from '../models/cart-item-total-calculator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -16,7 +17,7 @@ import {
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit() {}
 
@@ -55,6 +56,11 @@ export class CheckoutComponent implements OnInit {
    */
   orderTotalIncTax(): number {
     return +(this.totalBeforeTax() + this.estimatedTaxToBeCollected());
+  }
+
+  submitOrder(): boolean {
+    this.router.navigate(['/order-submitted']);
+    return false;
   }
 
 }

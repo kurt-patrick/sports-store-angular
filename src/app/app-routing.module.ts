@@ -9,6 +9,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthGuard } from './guards/auth.guard';
+import { OrderSubmittedComponent } from './order-submitted/order-submitted.component';
 
 const routes: Routes = [
   { path: 'products', component: ProductListComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
     component: CheckoutComponent,
     canActivate: [AuthGuard]
   },
+  { path: 'order-submitted', component: OrderSubmittedComponent },
   { path: 'cart', component: CartComponent },
   { path: 'signin', component: SignInComponent },
   { path: 'search', component: SearchResultsComponent },

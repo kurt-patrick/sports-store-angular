@@ -26,6 +26,7 @@ import { CartLineComponent } from './cart-line/cart-line.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthGuard } from './guards/auth.guard';
+import { OrderSubmittedComponent } from './order-submitted/order-submitted.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AuthGuard } from './guards/auth.guard';
     ProductSizesComponent,
     CartLineComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    OrderSubmittedComponent
   ],
   imports: [
     BrowserModule,
