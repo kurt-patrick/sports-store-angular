@@ -27,16 +27,16 @@
         <div class="col-4"></div>
 
         <div class="col-8"><label>Items:</label></div>
-        <div class="col-4 text-right"><label>AUD 29.55</label></div>
+        <div class="col-4 text-right"><label>{{ itemsExTotal() | currency }}</label></div>
         <div class="col-8"><label>Shipping & handling:</label></div>
-        <div class="col-4 text-right"><label>AUD 10.49</label></div>
+        <div class="col-4 text-right"><label>{{ shippingAndHandling() | currency }}</label></div>
         <div class="col-8"><label>Total before tax:</label></div>
-        <div class="col-4 text-right"><label>AUD 40.04</label></div>
+        <div class="col-4 text-right"><label>{{ totalBeforeTax() | currency }}</label></div>
         <div class="col-8"><label>Estimated tax to be collected:</label></div>
-        <div class="col-4 text-right"><label>AUD 4.01</label></div>
+        <div class="col-4 text-right"><label>{{ estimatedTaxToBeCollected() | currency }}</label></div>
 
         <div class="col-8 pt-4"><h5 class="text-danger"><b>Order total:</b></h5></div>
-        <div class="col-4 pt-4 text-right"><h5 class="text-danger"><b>AUD 44.05</b></h5></div>
+        <div class="col-4 pt-4 text-right"><h5 class="text-danger"><b>{{ orderTotalIncTax() | currency }}</b></h5></div>
 
       </div>
     </div>

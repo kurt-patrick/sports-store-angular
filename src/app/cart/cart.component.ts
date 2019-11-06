@@ -26,21 +26,11 @@ export class CartComponent implements OnInit {
   }
 
   subtotal(): number {
-    // tslint:disable-next-line: no-inferrable-types
-    let total: number = 0;
-    for (const item of this.items) {
-      total += CartItemTotalCalculator.calculateLineTotal(item);
-    }
-    return total;
+    return CartItemTotalCalculator.calculateCartTotal(this.cartService.getCartItems());
   }
 
   totalQuantity(): number {
-    // tslint:disable-next-line: no-inferrable-types
-    let total: number = 0;
-    for (const item of this.items) {
-      total += +item.quantity;
-    }
-    return +total;
+    return CartItemTotalCalculator.calculateCartQuantity(this.cartService.getCartItems());
   }
 
 }

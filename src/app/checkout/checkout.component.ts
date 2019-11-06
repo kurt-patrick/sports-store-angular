@@ -1,4 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  CartService
+} from '../services/cart.service';
+import {
+  CartItemTotalCalculator
+} from '../models/cart-item-total-calculator';
 
 @Component({
   selector: 'app-checkout',
@@ -7,9 +16,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cartService: CartService) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  /**
+   * This is ex total for all items excluding postage
+   */
+  itemsExTotal(): number {
+    console.log('CheckoutComponent.itemsExTotal()');
+    const total: number = CartItemTotalCalculator.calculateCartTotal(this.cartService.getCartItems());
+    if (!total || total === 0) {
+      return 0;
+    }
+    return +(total / 1.1);
+  }
+
+  shippingAndHandling(): number {
+    return 0;
+  }
+
+  /**
+   * This is itemsExTotal() + ShippingAndHndling()
+   */
+  totalBeforeTax(): number {
+    return +(this.itemsExTotal() + this.shippingAndHandling());
+  }
+
+  /**
+   * tax rate * totalBeforeTax()
+   */
+  estimatedTaxToBeCollected(): number {
+    return +(0.1 * this.totalBeforeTax());
+  }
+
+  /**
+   * totalBeforeTax() + estimatedTaxToBeCollected()
+   */
+  orderTotalIncTax(): number {
+    return +(this.totalBeforeTax() + this.estimatedTaxToBeCollected());
   }
 
 }
