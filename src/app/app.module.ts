@@ -13,7 +13,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SearchResultsComponent } from './components/search-results/search-results.component';
 import { SearchResultComponent } from './components/search-result/search-result.component';
 import { ProductListComponent } from './products/product-list/product-list.component';
@@ -27,6 +27,8 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthGuard } from './guards/auth.guard';
 import { OrderSubmittedComponent } from './order-submitted/order-submitted.component';
+import { JwtInterceptor } from './interceptors/jwt-interceptor';
+import { ErrorInterceptor } from './interceptors/error-interceptor';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { OrderSubmittedComponent } from './order-submitted/order-submitted.compo
     NgxLoadingModule.forRoot({})
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     AuthGuard,
     ProductService,
     ProductDetailResolverService

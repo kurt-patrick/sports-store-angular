@@ -52,8 +52,7 @@ export class SignInComponent implements OnInit {
         (error: any) => {
           console.log('error: ');
           console.log(JSON.stringify(error));
-          this.alertMessage = error.error.message;
-          // this.loading = false;
+          this.alertMessage = error;
         },
         () => {
           console.log('complete');
