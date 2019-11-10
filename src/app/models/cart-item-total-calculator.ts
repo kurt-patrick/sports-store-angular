@@ -12,8 +12,6 @@ export class CartItemTotalCalculator {
   }
 
   static calculateCartTotal(cartItems: CartItem[]): number {
-    console.log('CartItemTotalCalculator.calculateCartTotal()');
-
     if (!cartItems) {
       return 0;
     }
@@ -21,14 +19,11 @@ export class CartItemTotalCalculator {
     let total: number = 0;
     for (const item of cartItems) {
       total += CartItemTotalCalculator.calculateLineTotal(item);
-      console.log('return total: ' + total);
     }
-    console.log('return total: ' + total);
     return total;
   }
 
   static calculateCartQuantity(cartItems: CartItem[]): number {
-    console.log('CartItemTotalCalculator.calculateCartQuantity()');
     if (!cartItems) {
       return 0;
     }
@@ -37,7 +32,6 @@ export class CartItemTotalCalculator {
     for (const item of cartItems) {
       total += +item.quantity;
     }
-    console.log('return total: ' + total);
     return +total;
   }
 

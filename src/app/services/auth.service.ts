@@ -1,54 +1,47 @@
 import { Injectable } from '@angular/core';
 import { UserAccount } from '../models/user-account';
-import { MOCK_USERS } from '../models/mock-user-accounts';
-import { Observable, of } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
+import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
+import { tap, delay, map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  isLoggedIn = false;
+  private currentUserSubject: BehaviorSubject<UserAccount>;
+  public currentUser: Observable<UserAccount>;
+
   redirectUrl: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<UserAccount>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
 
-  login(user: UserAccount): Observable<boolean> {
+  public get isLoggedIn(): boolean {
+    return this.currentUserValue !== null && this.currentUserValue.id >= 1;
+  }
 
-    console.log('AuthService.login() =======================================');
+  public get currentUserValue(): UserAccount {
+      return this.currentUserSubject.value;
+  }
 
-    const match = MOCK_USERS.find( ({email: username, password}) =>
-      username === user.email && password === user.password);
-
-    this.isLoggedIn = match !== null;
-    console.log('authenticated: ' + this.isLoggedIn);
-
-    console.log('this.redirectUrl: ' + this.redirectUrl);
-    if (this.redirectUrl) {
-      this.router.navigate([this.redirectUrl]);
-      this.redirectUrl = null;
-    } else {
-      this.router.navigate(['/home']);
-    }
-
-    return of(this.isLoggedIn).pipe(
-      delay(2000)
-    );
-
-    /*
-    return of(this.isLoggedIn).pipe(
-      delay(2000),
-      tap(value => this.isLoggedIn = authenticated)
-    );
-    */
-
+  login(email: string, password: string) {
+    return this.http.post<UserAccount>(`${environment.apiUrl}/users/authenticate`, { email, password })
+      .pipe(map(model => {
+        localStorage.setItem('currentUser', JSON.stringify(model));
+        this.currentUserSubject.next(model);
+        return model;
+      }));
   }
 
   logout() {
-    this.isLoggedIn = false;
     this.redirectUrl = null;
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
     // this.router.navigate(['/home']);
   }
 

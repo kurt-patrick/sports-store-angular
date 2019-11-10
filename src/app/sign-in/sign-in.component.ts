@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { UserAccount } from '../models/user-account';
 
 @Component({
   selector: 'app-sign-in',
@@ -37,18 +40,36 @@ export class SignInComponent implements OnInit {
       return false;
     }
 
-    const authenticated = this.authService.login({
-      id: 0,
-      email: this.email,
-      password: this.password
-    });
-
-    if (!authenticated) {
-      this.alertMessage = 'Invalid email or password';
-    }
+    this.authService.login(this.email, this.password)
+      .pipe(first())
+      .subscribe(
+        (value: UserAccount) => {
+          console.log('success: ');
+          console.log(JSON.stringify(value));
+          this.alertMessage = null;
+          this.redirect();
+        },
+        (error: any) => {
+          console.log('error: ');
+          console.log(JSON.stringify(error));
+          this.alertMessage = error.error.message;
+          // this.loading = false;
+        },
+        () => {
+          console.log('complete');
+        });
 
     return false;
   }
+
+  private redirect(): void {
+    if (this.authService.redirectUrl) {
+      this.router.navigate([this.authService.redirectUrl]);
+      this.authService.redirectUrl = null;
+    } else {
+      this.router.navigate(['/home']);
+    }
+}
 
   private validateDetails() {
     this.alertMessage = '';

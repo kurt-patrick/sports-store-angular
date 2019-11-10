@@ -1,5 +1,5 @@
-<a *ngIf="!isLoggedIn$" class="d-block px-3 py-2 text-right text-bold text-white" [routerLink]="'/signin'">Sign In / Register</a>
-<a *ngIf="isLoggedIn$" class="d-block px-3 py-2 text-right text-bold text-white" [routerLink]="'/signin'" (click)="authService.logout()" >Logout</a>
+<a *ngIf="!isLoggedIn" class="d-block px-3 py-2 text-right text-bold text-white" [routerLink]="'/signin'">Sign In / Register</a>
+<a *ngIf="isLoggedIn" class="d-block px-3 py-2 text-right text-bold text-white" [routerLink]="'/home'" (click)="authService.logout()" >Logout</a>
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
