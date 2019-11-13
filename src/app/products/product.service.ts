@@ -13,24 +13,28 @@ import {
 import {
   MOCK_PRODUCTS
 } from '../models/mock-products';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private products$: BehaviorSubject < Product[] > = new BehaviorSubject < Product[] > (MOCK_PRODUCTS);
-
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   getProducts() {
-    return this.products$;
+    return this.http.get<Product[]>(`${environment.apiUrl}/products`)
+      .pipe(map(model => {
+        return model;
+      }));
   }
 
   getProductById(id: number) {
-    return this.getProducts().pipe(
-      map(list => list.find(product => product.id === +id))
-    );
+    return this.http.get<Product>(`${environment.apiUrl}/products/${id}`)
+      .pipe(map(model => {
+        return model;
+      }));
   }
 
   searchProducts(productName: string) {
