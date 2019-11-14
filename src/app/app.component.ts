@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessagingService } from './services/messaging.service';
-import { Router } from '@angular/router';
+import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,18 +11,30 @@ export class AppComponent implements OnInit {
   loading: boolean;
   routerUrl: string;
 
-  constructor(private messagingService: MessagingService, private router: Router) {
-    this.setRouterUrl();
+  constructor(private router: Router) {
+    router.events.subscribe((event: RouterEvent) => {
+      this.checkRouterEvent(event);
+    });
   }
 
   ngOnInit() {
-    this.messagingService.ngxLoading.subscribe(value => this.loading = value);
-    this.router.events.subscribe(value => this.setRouterUrl());
   }
 
-  private setRouterUrl(): void {
+  private checkRouterEvent(event: RouterEvent): void {
+    if (event instanceof NavigationStart) {
+      this.loading = true;
+    }
+
+    const stopRouting =
+      event instanceof NavigationEnd ||
+      event instanceof NavigationCancel ||
+      event instanceof NavigationError;
+
+    if (stopRouting) {
+      this.loading = false;
+    }
+
     this.routerUrl = this.router.url;
-    console.log('this.routerUrl: ' + this.routerUrl);
   }
 
 }
