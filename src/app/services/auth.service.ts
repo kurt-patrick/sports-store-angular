@@ -39,10 +39,14 @@ export class AuthService {
   }
 
   logout() {
-    this.redirectUrl = null;
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    // this.router.navigate(['/home']);
+    if (!this.redirectUrl || this.redirectUrl.trim().length === 0) {
+      this.redirectUrl = '/home';
+    }
+    console.log(`this.router.navigate([${this.redirectUrl}]);`);
+    this.router.navigate([this.redirectUrl]);
+    this.redirectUrl = null;
   }
 
 }

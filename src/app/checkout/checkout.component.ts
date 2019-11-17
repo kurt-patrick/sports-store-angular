@@ -9,6 +9,12 @@ import {
   CartItemTotalCalculator
 } from '../models/cart-item-total-calculator';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { OrderSubmission } from '../models/order-submission';
+import { OrderSubmissionProduct } from '../models/order-submission-product';
+import { environment } from 'src/environments/environment';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-checkout',
@@ -17,7 +23,7 @@ import { Router } from '@angular/router';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(private cartService: CartService, private router: Router, private authService: AuthService, private http: HttpClient) {}
 
   ngOnInit() {}
 
@@ -59,8 +65,52 @@ export class CheckoutComponent implements OnInit {
   }
 
   submitOrder(): boolean {
-    this.router.navigate(['/order-submitted']);
+    // {products: [{ id: 1, quantity: 1}], orderId: '' , userId: 1 }
+    console.log('checkout.submitOrder()');
+    const orderSubmission = this.buildOrderSubmission();
+
+    console.log(`${environment.apiUrl}/orders/submit`);
+    console.log('about to post');
+    const response = this.http.post<OrderSubmission>(`${environment.apiUrl}/orders/submit`, orderSubmission)
+      .pipe(
+        tap(res => console.log('http response: ' + JSON.stringify(res))),
+        map(model => {
+          console.log('in post');
+          console.log('response body:');
+          console.log(JSON.stringify(model));
+          return model;
+        })
+      ).subscribe(
+        (value: OrderSubmission): void => {
+          console.log('success: ');
+          console.log(JSON.stringify(value));
+          this.router.navigate(['/order-submitted']);
+        },
+        (error: any) => {
+          console.log('error: ');
+          console.log(JSON.stringify(error));
+          this.authService.redirectUrl = '/checkout';
+        },
+        () => {
+          console.log('complete');
+        }
+      );
+
+
+    console.log('return false');
     return false;
+
+  }
+
+  private buildOrderSubmission(): OrderSubmission {
+    console.log('checkout.buildOrderSubmission()');
+    const order = new OrderSubmission();
+    order.orderId = '';
+    order.userId = this.authService.currentUserValue.id;
+    const cartItems = this.cartService.getCartItems();
+    cartItems.forEach(cartItem => order.products.push(new OrderSubmissionProduct(cartItem)));
+    console.log(JSON.stringify(order));
+    return order;
   }
 
 }
