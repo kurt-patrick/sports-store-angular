@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
+import { MessagingService } from '../services/messaging.service';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +16,7 @@ export class HeaderComponent implements OnInit {
     return this.authService.isLoggedIn;
   }
 
-  constructor(public authService: AuthService, private router: Router) {
-    // this.authService.isLoggedIn.subscribe(value => this.isLoggedIn$ = value);
+  constructor(public authService: AuthService, private router: Router, private messagingService: MessagingService) {
   }
 
   @Input() searchValue: string;
@@ -25,7 +25,10 @@ export class HeaderComponent implements OnInit {
 
   // https://www.c-sharpcorner.com/article/components-menus-in-angular-6-part-two/
   search(): void {
+    console.log('header.search()');
     this.router.navigate(['search']);
+    this.messagingService.searchByName(this.searchValue);
+    this.searchValue = '';
   }
 
 

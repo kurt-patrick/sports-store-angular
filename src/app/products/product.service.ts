@@ -2,7 +2,7 @@ import {
   BehaviorSubject, Observable
 } from 'rxjs';
 import {
-  map, throttleTime
+  map, throttleTime, tap
 } from 'rxjs/operators';
 import {
   Injectable
@@ -25,9 +25,11 @@ export class ProductService {
 
   getProducts() {
     return this.http.get<Product[]>(`${environment.apiUrl}/products`)
-      .pipe(map(model => {
-        return model;
-      }));
+      .pipe(
+        map(model => {
+          return model;
+        })
+      );
   }
 
   getProductById(id: number) {
@@ -38,10 +40,19 @@ export class ProductService {
   }
 
   searchProducts(productName: string) {
-    const matchOn = productName.toLowerCase();
-    return this.getProducts().pipe(
-      map(list => list.find(product => product.productName.indexOf(productName) >= 0))
-    );
+    console.log(`product.service.searchProducts()`);
+    console.log(`${environment.apiUrl}/products/search?name=${productName}`);
+    console.log('about to get');
+    return this.http.get<Product[]>(`${environment.apiUrl}/products/search?name=${productName}`)
+      .pipe(
+        tap(res => console.log('http response: ' + JSON.stringify(res))),
+        map(model => {
+          console.log('in get');
+          console.log('response body:');
+          console.log(JSON.stringify(model));
+          return model;
+        })
+      );
   }
 
 }
