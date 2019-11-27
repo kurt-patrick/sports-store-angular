@@ -1,37 +1,38 @@
-<a *ngIf="!isLoggedIn" class="d-block px-3 py-2 text-right text-bold text-white" [routerLink]="'/signin'">Sign In / Register</a>
-<a *ngIf="isLoggedIn" class="d-block px-3 py-2 text-right text-bold text-white" [routerLink]="'/home'" (click)="authService.logout()" >Logout</a>
+<a *ngIf="!isLoggedIn" class="d-block px-3 py-2 text-right text-bold text-white" [routerLink]="'/signin'">Sign In /
+  Register</a>
+<a *ngIf="isLoggedIn" class="d-block px-3 py-2 text-right text-bold text-white" [routerLink]="'/home'"
+  (click)="authService.logout()">Logout</a>
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <div class="container-fluid">
 
-    <a class="navbar-brand" [routerLink]="['home']">Angular Store</a>
+      <a class="navbar-brand" [routerLink]="['home']">Angular Store</a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
-      aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nb">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link text-white" [routerLink]="'/products/1'">PRODUCTS/1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" [routerLink]="'/products'" [queryParams]="{query: 'sales'}">SALES</a>
-        </li>
-      </ul>
+      <div class="collapse navbar-collapse" id="nb">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white" [routerLink]="'/products/1'">PRODUCTS/1</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" [routerLink]="'/products'" [queryParams]="{query: 'sales'}">SALES</a>
+          </li>
+        </ul>
 
-      <div class="form-inline">
-        <input
-          class="form-control mr-sm-2" type="search"
-          placeholder="Search" aria-label="Search"
-          [(ngModel)]="searchValue" [value]="searchValue"
-          (keyup.enter)="search()">
-        <button class="btn btn-outline-light my-2 my-sm-0 mr-sm-2" type="button" (click)="search()" [disabled]="!searchValue || searchValue.trim().length === 0">Search</button>
-        <button class="btn btn-outline-light my-2 my-sm-0" type="button" [routerLink]="['/cart']">Cart</button>
+        <div class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+            [(ngModel)]="searchValue" [value]="searchValue" (keyup.enter)="search()">
+          <button class="btn btn-outline-light my-2 my-sm-0 mr-sm-2" type="button" (click)="search()"
+            [disabled]="!searchValue || searchValue.trim().length === 0">Search</button>
+          <button class="btn btn-outline-light my-2 my-sm-0" type="button" [routerLink]="['/cart']">Cart</button>
+        </div>
+
       </div>
 
     </div>
-
   </nav>
   <hr>
 </header>
