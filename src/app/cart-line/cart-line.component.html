@@ -3,26 +3,26 @@
 <div class="row">
 
   <div class="col-2">
-    <picture *ngIf="cartItem.product.imageUrl">
-      <img [src]="cartItem.product.imageUrl" class="img-fluid">
+    <picture *ngIf="cartItem.imageUrl">
+      <img [src]="cartItem.imageUrl" class="img-fluid">
     </picture>
   </div>
 
   <div class="col-sm-8 col-xs-7">
-    <div class="row"><b>{{ cartItem.product.productName }}</b></div>
-    <div class="row">{{ cartItem.product.colourDescription }}</div>
+    <div class="row"><b>{{ cartItem.productName }}</b></div>
+    <div class="row">{{ cartItem.description }}</div>
     <div class="row pt-2">
       <select class="custom-select-sm" id="quantity" aria-hidden="true" [(ngModel)]="cartItem.quantity">
 
         <option [value]="cartItem.quantity" disabled selected>Qty: {{cartItem.quantity }}</option>
-        <option *ngFor="let qty of quantityValues()" [value]="qty">{{qty}}</option>
+        <option *ngFor="let qty of quantityValues" [value]="qty">{{qty}}</option>
 
         <!-- [attr.selected]="qty===cartItem.quantity ? true : null"         -->
 
       </select>
     </div>
     <div class="row pt-2 pb-0">
-      <label>Unit Price: {{ cartItem.product.productPrice | currency }}</label>
+      <label>Unit Price: {{ cartItem.exPrice | currency }}</label>
     </div>
     <div class="row pt-0">
       <a class="link" href="javascript:void" (click)="delete()">Delete</a>
@@ -30,7 +30,7 @@
   </div>
 
   <div class="col-2 text-right">
-    <label><b>{{ lineTotal() | currency }}</b></label>
+    <label><b>{{ cartItem.incPrice | currency }}</b></label>
     <div class="row"></div>
     <div class="row"></div>
     <div class="row"></div>

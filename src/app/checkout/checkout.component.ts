@@ -32,36 +32,23 @@ export class CheckoutComponent implements OnInit {
    */
   itemsExTotal(): number {
     console.log('CheckoutComponent.itemsExTotal()');
-    const total: number = CartItemTotalCalculator.calculateCartTotal(this.cartService.getCartItems());
-    if (!total || total === 0) {
-      return 0;
-    }
-    return +(total / 1.1);
+    return this.cartService.getCart().exTotal;
   }
 
   shippingAndHandling(): number {
     return 0;
   }
 
-  /**
-   * This is itemsExTotal() + ShippingAndHndling()
-   */
   totalBeforeTax(): number {
     return +(this.itemsExTotal() + this.shippingAndHandling());
   }
 
-  /**
-   * tax rate * totalBeforeTax()
-   */
   estimatedTaxToBeCollected(): number {
-    return +(0.1 * this.totalBeforeTax());
+    return this.cartService.getCart().gst;
   }
 
-  /**
-   * totalBeforeTax() + estimatedTaxToBeCollected()
-   */
   orderTotalIncTax(): number {
-    return +(this.totalBeforeTax() + this.estimatedTaxToBeCollected());
+    return this.cartService.getCart().incTotal;
   }
 
   submitOrder(): boolean {
@@ -107,7 +94,7 @@ export class CheckoutComponent implements OnInit {
     const order = new OrderSubmission();
     order.orderId = '';
     order.userId = this.authService.currentUserValue.id;
-    const cartItems = this.cartService.getCartItems();
+    const cartItems = this.cartService.getCart().items;
     cartItems.forEach(cartItem => order.products.push(new OrderSubmissionProduct(cartItem)));
     console.log(JSON.stringify(order));
     return order;

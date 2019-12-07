@@ -15,7 +15,7 @@ export class OrderSubmittedComponent implements OnInit {
   }
 
   orderTotalIncTax(): number {
-    return CartItemTotalCalculator.calculateCartTotal(this.cartService.getCartItems());
+    return this.cartService.getCart().incTotal;
   }
 
 }

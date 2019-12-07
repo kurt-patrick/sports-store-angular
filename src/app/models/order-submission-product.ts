@@ -8,7 +8,7 @@ export class OrderSubmissionProduct {
     if (!cartItem) {
       throwError('product cannot be null');
     }
-    this.id = cartItem.product.id;
+    this.id = cartItem.productId;
     this.quantity = cartItem.quantity;
   }
 

@@ -23,7 +23,7 @@
         <button class="btn btn-success" [routerLink]="['/checkout']">Proceed to checkout</button>
       </div>
       <div class="col-6 text-right pt-0">
-        <h6><b>Subtotal ({{ totalQuantity() }} items): {{ subtotal() | currency }}</b></h6>
+        <h6><b>Subtotal ({{ totalQuantity }} items): {{ subtotal | currency }}</b></h6>
       </div>
     </div>
 
