@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
-import { CartItemTotalCalculator } from '../models/cart-item-total-calculator';
 
 @Component({
   selector: 'app-order-submitted',
@@ -9,13 +8,12 @@ import { CartItemTotalCalculator } from '../models/cart-item-total-calculator';
 })
 export class OrderSubmittedComponent implements OnInit {
 
+  orderTotalIncTax: number;
+
   constructor(private cartService: CartService) {}
 
   ngOnInit() {
-  }
-
-  orderTotalIncTax(): number {
-    return this.cartService.getCart().incTotal;
+    this.orderTotalIncTax = this.cartService.getCart().incTotal;
   }
 
 }

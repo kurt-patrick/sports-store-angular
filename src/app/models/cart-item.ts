@@ -1,5 +1,4 @@
 export class CartItem {
-  id: number;
   exPrice: number;
   incPrice: number;
   gst: number;

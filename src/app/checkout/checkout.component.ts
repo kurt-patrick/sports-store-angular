@@ -5,9 +5,6 @@ import {
 import {
   CartService
 } from '../services/cart.service';
-import {
-  CartItemTotalCalculator
-} from '../models/cart-item-total-calculator';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { HttpClient } from '@angular/common/http';

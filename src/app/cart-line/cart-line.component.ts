@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CartItem } from '../models/cart-item';
 import { CartService } from '../services/cart.service';
-import { CartItemTotalCalculator } from '../models/cart-item-total-calculator';
 
 @Component({
   selector: 'app-cart-line',
@@ -40,6 +39,7 @@ export class CartLineComponent implements OnInit {
   */
 
   delete(): void {
+    console.count('CartLineComponent.delete()');
     this.cartService.removeItem(this.cartItem);
   }
 

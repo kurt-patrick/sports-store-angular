@@ -4,7 +4,7 @@ import { CartItem } from '../models/cart-item';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { map, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Cart } from '../models/cart';
 
 @Injectable({
@@ -12,7 +12,18 @@ import { Cart } from '../models/cart';
 })
 export class CartService {
 
+  private changeEvent = new BehaviorSubject<Cart>(null);
+  onChange = this.changeEvent.asObservable();
+
   constructor(private http: HttpClient) {
+  }
+
+  cartChanged(value: Cart = null) {
+    let cart: Cart = value;
+    if (!cart) {
+      cart = this.getCartFromLocalStorage();
+    }
+    this.changeEvent.next(cart);
   }
 
   getCartGuid(): Observable<string> {
@@ -91,12 +102,33 @@ export class CartService {
   }
 
   removeItem(cartItem: CartItem): void {
+    console.count('CartService.removeItem()');
     this.getCartGuid().subscribe(
       (guid: string) => {
+        console.log(`guid: ${guid}`);
+        console.log(`ProductId: ${cartItem.productId}`);
+
         this.http.post<Cart>(`${environment.apiUrl}/cart/${guid}/remove`, { ProductId: cartItem.productId })
-        .pipe(map(model => {
-          this.saveCartToLocalStorage(model);
-        }));
+        .pipe(
+          map(model => {
+            console.log(JSON.stringify(model));
+            this.saveCartToLocalStorage(model);
+            return model;
+          })
+        )
+        .subscribe(
+          (value: Cart): void => {
+            // console.log('value: ' + JSON.stringify(value));
+            this.changeEvent.next(value);
+          },
+          (error: any): void => {
+            // console.log('error: ' + JSON.stringify(error));
+          },
+          (): void => {
+            // console.log('()');
+          }
+        );
+
     });
   }
 

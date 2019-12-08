@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartItem } from '../models/cart-item';
 import { CartService } from '../services/cart.service';
 import { Observable } from 'rxjs';
-import { Product } from '../models/product';
-import { CartItemTotalCalculator } from '../models/cart-item-total-calculator';
+import { Cart } from '../models/cart';
 
 @Component({
   selector: 'app-cart',
@@ -18,19 +17,29 @@ export class CartComponent implements OnInit {
 
   constructor(private cartService: CartService) {
     console.count('CartComponent.constructor()');
+    cartService.onChange.subscribe(value => {
+      this.setValues(value);
+    });
   }
 
   ngOnInit() {
     console.count('CartComponent.ngOnInit()');
     const cart = this.cartService.getCart();
+    this.setValues(cart);
+  }
+
+  private setValues(cart: Cart): void {
+    console.count('CartComponent.setValues()');
     if (cart && cart.items) {
       this.items = cart.items;
-      this.subtotal = cart.exTotal;
-      this.totalQuantity = CartItemTotalCalculator.calculateCartQuantity(cart.items);
+      this.subtotal = cart.incTotal;
+      this.totalQuantity = cart.quantityTotal;
+      console.log(JSON.stringify(cart));
     }
   }
 
   remove(cartItem: CartItem): void {
+    console.count('CartComponent.remove()');
     this.cartService.removeItem(cartItem);
   }
 
