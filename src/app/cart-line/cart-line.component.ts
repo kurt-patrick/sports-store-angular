@@ -11,6 +11,7 @@ export class CartLineComponent implements OnInit {
 
   @Input() cartItem: CartItem;
   quantityValues: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  quantityValueCurrent: number;
 
   constructor(private cartService: CartService) {
     console.count('CartLineComponent.constructor()');
@@ -18,25 +19,18 @@ export class CartLineComponent implements OnInit {
 
   ngOnInit() {
     console.count('CartLineComponent.ngOnInit()');
+    this.quantityValueCurrent = this.cartItem.quantity;
   }
 
-  /*
-  get quantityValues(): number[] {
-    console.count('CartLineComponent.quantityValues()');
-    let max = 5;
-    if (this.cartItem && this.cartItem.quantity > 0) {
-      max = Math.max(max, this.cartItem.quantity);
+  onQuantityChange(qty: number): void {
+    console.count(`CartLineComponent.onQuantityChange(${qty})`);
+    if (+qty !== +this.quantityValueCurrent) {
+      console.log(`quantityValueCurrent: ${this.quantityValueCurrent}, qty: ${qty}`);
+      this.cartItem.quantity = +qty;
+      this.quantityValueCurrent = +qty;
+      this.cartService.updateProductQuantity(this.cartItem.productId, +qty);
     }
-    const arr: number[] = [];
-    // tslint:disable-next-line: no-inferrable-types
-    let value: number = 1;
-    while (value <= max) {
-      arr.push(value);
-      value += 1;
-    }
-    return arr;
   }
-  */
 
   delete(): void {
     console.count('CartLineComponent.delete()');

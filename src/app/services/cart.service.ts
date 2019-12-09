@@ -49,21 +49,14 @@ export class CartService {
 
   }
 
-  addProduct(product: Product, quantity: number): void {
-    console.log('addProduct()');
+  updateProductQuantity(productId: number, quantity: number): void {
+    console.log(`updateProductQuantity(${productId}, ${quantity})`);
 
     this.getCartGuid().subscribe(
       (guid: string) => {
         console.log('guid: ' + guid);
 
-        const cart = this.getCartFromLocalStorage();
-        const index = this.indexOf(product, cart);
-
-        if (index >= 0) {
-          quantity += +cart.items[index].quantity;
-        }
-
-        this.http.post<Cart>(`${environment.apiUrl}/cart/${guid}/add`, { ProductId: product.id, Quantity: quantity })
+        this.http.post<Cart>(`${environment.apiUrl}/cart/${guid}/add`, { ProductId: +productId, Quantity: quantity })
         .pipe(
           map(model => {
             this.saveCartToLocalStorage(model);
@@ -73,6 +66,7 @@ export class CartService {
         .subscribe(
           (value: Cart): void => {
             // console.log('value: ' + JSON.stringify(value));
+            this.cartChanged(value);
           },
           (error: any): void => {
             // console.log('error: ' + JSON.stringify(error));
@@ -84,7 +78,11 @@ export class CartService {
 
 
       });
+  }
 
+  addProduct(product: Product, quantity: number): void {
+    console.log('addProduct()');
+    this.updateProductQuantity(product.id, quantity);
   }
 
   private getCartFromLocalStorage(): Cart {
@@ -132,7 +130,7 @@ export class CartService {
     });
   }
 
-  private indexOf(product: Product, cart: Cart): number {
+  private indexOf(productId: number, cart: Cart): number {
     if (!cart || !cart.items || cart.items.length === 0) {
       console.log('indexOf. cart is null or no items...');
       return -1;
@@ -140,7 +138,7 @@ export class CartService {
 
     let index = 0;
     for (const item of cart.items) {
-      if (product.id === item.productId) {
+      if (productId === item.productId) {
         return index;
       }
       index += 1;

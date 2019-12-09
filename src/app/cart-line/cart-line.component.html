@@ -12,7 +12,7 @@
     <div class="row"><b>{{ cartItem.productName }}</b></div>
     <div class="row">{{ cartItem.description }}</div>
     <div class="row pt-2">
-      <select class="custom-select-sm" id="quantity" aria-hidden="true" [(ngModel)]="cartItem.quantity">
+      <select class="custom-select-sm" id="quantity" aria-hidden="true" (change)="onQuantityChange($event.target.value)" [(ngModel)]="cartItem.quantity">
 
         <option [value]="cartItem.quantity" disabled selected>Qty: {{cartItem.quantity }}</option>
         <option *ngFor="let qty of quantityValues" [value]="qty">{{qty}}</option>
