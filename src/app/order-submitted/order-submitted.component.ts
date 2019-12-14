@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
+import { OrderService } from '../services/order.service';
 
 @Component({
   selector: 'app-order-submitted',
@@ -8,12 +9,21 @@ import { CartService } from '../services/cart.service';
 })
 export class OrderSubmittedComponent implements OnInit {
 
+  orderId: number;
   orderTotalIncTax: number;
+  private orderService: OrderService;
+  private cartService: CartService;
 
-  constructor(private cartService: CartService) {}
+  constructor(orderService: OrderService, cartService: CartService) {
+    this.orderService = orderService;
+    this.cartService = cartService;
+    this.cartService.clearCart();
+  }
 
   ngOnInit() {
-    this.orderTotalIncTax = this.cartService.getCart().incTotal;
+    const order = this.orderService.orderResponse();
+    this.orderId = order.id;
+    this.orderTotalIncTax = order.incTotal;
   }
 
 }

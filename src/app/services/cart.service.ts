@@ -116,35 +116,23 @@ export class CartService {
         )
         .subscribe(
           (value: Cart): void => {
-            // console.log('value: ' + JSON.stringify(value));
+            console.log('value: ' + JSON.stringify(value));
             this.changeEvent.next(value);
           },
           (error: any): void => {
-            // console.log('error: ' + JSON.stringify(error));
+            console.log('error: ' + JSON.stringify(error));
           },
           (): void => {
-            // console.log('()');
+            console.log('()');
           }
         );
 
     });
   }
 
-  private indexOf(productId: number, cart: Cart): number {
-    if (!cart || !cart.items || cart.items.length === 0) {
-      console.log('indexOf. cart is null or no items...');
-      return -1;
-    }
-
-    let index = 0;
-    for (const item of cart.items) {
-      if (productId === item.productId) {
-        return index;
-      }
-      index += 1;
-    }
-
-    return -1;
+  clearCart(): void {
+    localStorage.removeItem('cart-contents');
+    this.changeEvent.next(this.getCartFromLocalStorage());
   }
 
 }

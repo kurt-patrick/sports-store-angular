@@ -27,9 +27,7 @@
         <div class="col-4"></div>
 
         <div class="col-8"><label>Items:</label></div>
-        <div class="col-4 text-right"><label>{{ itemsExTotal() | currency }}</label></div>
-        <div class="col-8"><label>Shipping & handling:</label></div>
-        <div class="col-4 text-right"><label>{{ shippingAndHandling() | currency }}</label></div>
+        <div class="col-4 text-right"><label>{{ quantityTotal() }}</label></div>
         <div class="col-8"><label>Total before tax:</label></div>
         <div class="col-4 text-right"><label>{{ totalBeforeTax() | currency }}</label></div>
         <div class="col-8"><label>Estimated tax to be collected:</label></div>
