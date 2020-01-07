@@ -71,7 +71,9 @@ export class CheckoutComponent implements OnInit {
               console.log('error: ');
               console.log(JSON.stringify(error));
               // this.authService.redirectUrl = '/checkout';
-              alert(error);
+              if (error) {
+                alert(error);
+              }
             },
             () => {
               console.log('complete');
